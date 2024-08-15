@@ -23,14 +23,14 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-12 col-sm-6">
+                        <div class="col-6">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="isAustralian" v-model="formData.isAustralian" @change="validateResident">
                                 <label class="form-check-label" for="isAustralian">Australian Resident?</label>
                             </div>
                             <div v-if="errors.resident" class="text-danger">{{ errors.resident }}</div>
                         </div>
-                        <div class="col-12 col-sm-6">
+                        <div class="col-6">
                             <label for="gender" class="form-label">Gender</label>
                             <select class="form-select" id="gender" v-model="formData.gender" @change="validateGender">
                                 <option value="" disabled>Select Gender</option>
@@ -53,7 +53,15 @@
                 </form>
             </div>
         </div>
-        <div class="row mt-5" v-if="submittedCards.length">
+
+        <DataTable :value="submittedCards" class="p-mt-4">
+                    <Column field="username" header="Username"></Column>
+                    <Column field="password" header="Password"></Column>
+                    <Column field="isAustralian" header="Australian Resident"></Column>
+                    <Column field="gender" header="Gender"></Column>
+                    <Column field="reason" header="Reason"></Column>
+                </DataTable>
+        <!-- <div class="row mt-5" v-if="submittedCards.length">
             <div class="d-flex flex-wrap justify-content-start">
                 <div v-for="(card, index) in submittedCards" :key="index" class="card m-2" style="width: 18rem;">
                     <div class="card-header">
@@ -68,12 +76,14 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
 
 const formData = ref({
     username: '',
@@ -193,3 +203,4 @@ const validateReason = (blur) => {
     font-size: 0.875rem;
 }
 </style>
+

@@ -13,9 +13,12 @@ import Aura from '@primevue/themes/aura';
 const app = createApp(App);
 app.use(PrimeVue, {
     theme: {
-        preset: Aura
+        preset: Aura,
+        options: {
+            darkModeSelector: '.app-dark',
+        }
     }
 });
 
-createApp(App).mount('#app')
+app.mount('#app')
 
