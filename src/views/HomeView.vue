@@ -3,6 +3,7 @@
         <div class="row">
             <div class="col-12 col-md-8 offset-md-2">
                 <h1 class="text-center">User Information Form</h1>
+                <h1 class="text-center">Let's build some more advanced features into our form.</h1>
                 <form @submit.prevent="submitForm">
                     <div class="row mb-3">
                         <div class="col-6">

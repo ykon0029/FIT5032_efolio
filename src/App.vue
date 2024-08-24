@@ -1,12 +1,27 @@
 <script setup>
 // import Json from './components/JSON.vue'
-import Form from './components/Form.vue'
+// import Form from './components/Form.vue'
+import BHeader from './components/BHeader.vue';
 </script>
 
 <template>
   <!-- <Json></Json> -->
-  <Form />
+  <!-- <Form /> -->
+  <div class="main-container">
+    <header>
+      <BHeader />
+    </header>
+
+    <main class="main-box">
+      <!-- <LibraryRegistrationForm /> -->
+      <!-- <JSONLab /> -->
+      <router-view></router-view>
+    </main>
+  </div>
 </template>
+
+
+<router-view></router-view>
 
 <style scoped>
 header {
