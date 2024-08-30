@@ -51,3 +51,17 @@ header {
   }
 }
 </style>
+
+<style scoped>
+.about-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh; /* Full height of the viewport */
+  text-align:start; /* Centers the text inside the container */
+}
+
+.about {
+  max-width: 600px; /* Optional: Limit the width of the text */
+}
+</style>

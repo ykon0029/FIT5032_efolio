@@ -1,7 +1,7 @@
 <template>
   <div class="about-container">
     <div class="about">
-      <h1>About Our Library</h1>
+      <h1 class="text-center">About Our Library</h1>
       <p>Welcome to our digital library! We're dedicated to providing a vast collection of books and resources to our community.</p>
     </div>
   </div>
@@ -17,7 +17,7 @@
   justify-content: center;
   align-items: center;
   height: 30vh; /* Full height of the viewport */
-  text-align: center; /* Centers the text inside the container */
+  text-align:start; /* Centers the text inside the container */
 }
 
 .about {
