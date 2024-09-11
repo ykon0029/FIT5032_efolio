@@ -8,31 +8,31 @@
       <input type="password" placeholder="Password" v-model="password" />
     </div>
     <div class="form-group">
-      <button @click="signin">Sign in via Firebase</button>
+      <select v-model="selectedRole">
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
     </div>
+    <div class="form-group">
+      <button @click="handleSignin">Sign in via Firebase</button>
+    </div>
+    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue"
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
-import { useRouter } from "vue-router"
+import { useAuth } from '../composables/useAuth'
+
+const { isAuthenticated, signin } = useAuth()
 
 const email = ref("")
 const password = ref("")
-const router = useRouter()
-const auth = getAuth()
+const selectedRole = ref("user") // Default to 'user'
+const errorMessage = ref("")
 
-const signin = () => {
-  signInWithEmailAndPassword(auth, email.value, password.value)
-    .then((data) => {
-      console.log("Firebase Sign In Successful!")
-      router.push("/")
-      console.log(auth.currentUser) // To check the current User signed in
-    })
-    .catch((error) => {
-      console.log(error.code)
-    })
+const handleSignin = async () => {
+  errorMessage.value = await signin(email.value, password.value, selectedRole.value)
 }
 </script>
 
@@ -78,5 +78,19 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
 }
 </style>

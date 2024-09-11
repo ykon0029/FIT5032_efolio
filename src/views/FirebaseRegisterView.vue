@@ -10,6 +10,13 @@
         <label for="password">Password:</label>
         <input type="password" id="password" v-model="password" required>
       </div>
+      <div class="form-group">
+        <label for="role">Role:</label>
+        <select id="role" v-model="role">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
       <button type="submit" class="btn btn-primary">Register</button>
     </form>
     <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
@@ -19,17 +26,27 @@
 <script setup>
 import { ref } from 'vue';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { useRouter } from 'vue-router';
 
 const email = ref('');
 const password = ref('');
+const role = ref('user');
 const errorMessage = ref('');
 const router = useRouter();
 
 const register = async () => {
   const auth = getAuth();
+  const db = getFirestore();
   try {
-    await createUserWithEmailAndPassword(auth, email.value, password.value);
+    // Create user in Firebase Authentication
+    const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
+    
+    // Store user role in Firestore
+    await setDoc(doc(db, 'role', userCredential.user.uid), {
+      role: role.value
+    });
+
     console.log('Registration successful');
     router.push('/FireLogin'); // Redirect to Firebase login page after successful registration
   } catch (error) {
@@ -70,6 +87,14 @@ input {
   padding: 8px;
   border: 1px solid #ced4da;
   border-radius: 4px;
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  background-color: white;
 }
 
 .btn {

@@ -20,11 +20,9 @@
       </div>
       <div class="d-flex">
         <ul class="nav">
-          <li v-if="!isAuthenticated" class="nav-item">
-            <router-link to="/login" class="nav-link" active-class="active">Login</router-link>
-          </li>
-          <li v-if="isAuthenticated" class="nav-item">
-            <a @click.prevent="logout" class="nav-link" href="#">Logout</a>
+          <li class="nav-item">
+            <router-link v-if="!isAuthenticated" to="/FireLogin" class="nav-link" active-class="active">Login</router-link>
+            <a v-else @click.prevent="logout" class="nav-link" href="#">Logout</a>
           </li>
         </ul>
       </div>
@@ -33,13 +31,7 @@
 </template>
 
 <script setup>
-import { isAuthenticated } from '../router'; // Import the global authentication state
-import { useRouter } from 'vue-router';
+import { useAuth } from '../composables/useAuth';
 
-const router = useRouter();
-
-const logout = () => {
-  isAuthenticated.value = false; // Set isAuthenticated to false on logout
-  router.push('/login'); // Redirect to login page
-};
+const { isAuthenticated, logout } = useAuth();
 </script>

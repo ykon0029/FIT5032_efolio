@@ -6,7 +6,6 @@ import AccessDeniedView from '../views/AccessDenied.vue';
 import { ref } from 'vue';
 import FirebaseSigninView from '../views/FirebaseSigninView.vue';
 import FirebaseRegisterView from '../views/FirebaseRegisterView.vue';  // Add this import
-
 // Simulate a global authentication state
 export const isAuthenticated = ref(false);
 
