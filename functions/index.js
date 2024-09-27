@@ -1,29 +1,11 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-
 const {onRequest} = require("firebase-functions/v2/https");
+const {onDocumentCreated} = require("firebase-functions/v2/firestore");
 const admin = require("firebase-admin");
-// const logger = require("firebase-functions/logger");
 const cors = require("cors")({origin: true});
 
 admin.initializeApp();
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
-
-// Existing function exports
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
-
-// New function to count books
+// Function to count the total number of books
 exports.countBooks = onRequest((req, res) => {
   cors(req, res, async () => {
     try {
@@ -38,3 +20,56 @@ exports.countBooks = onRequest((req, res) => {
     }
   });
 });
+
+// Function to add a new book with ISBN and name fields
+exports.addBook = onRequest((req, res) => {
+  cors(req, res, async () => {
+    try {
+      const {isbn, name} = req.body;
+
+      // Check if both ISBN and name are provided
+      if (!isbn || !name) {
+        res.status(400).send("ISBN and name are required.");
+        return;
+      }
+
+      // Add the new book to Firestore with capitalized fields
+      await admin.firestore().collection("books").add({
+        isbn: isbn.toUpperCase(),
+        name: name.toUpperCase(),
+      });
+
+      res.status(200).send("Book added successfully!");
+    } catch (error) {
+      console.error("Error adding book:", error.message);
+      res.status(500).send("Error adding book");
+    }
+  });
+});
+
+// Firestore trigger to capitalize book data on creation
+exports.capitalizeBookData = onDocumentCreated("books/{bookId}", (event) => {
+  const book = event.data.data();
+  const bookId = event.params.bookId;
+
+  // Capitalize book fields
+  const capitalizedData = {
+    isbn: book.isbn.toUpperCase(),
+    name: book.name.toUpperCase(),
+  };
+
+  // Update the document with capitalized data
+  return admin.firestore()
+      .collection("books")
+      .doc(bookId)
+      .update(capitalizedData)
+      .then(() => {
+        console.log(
+            `Successfully updated book ${bookId} with capitalized data.`);
+      })
+      .catch((error) => {
+        console.error(`Error updating book ${bookId}:`, error);
+      });
+});
+
+
