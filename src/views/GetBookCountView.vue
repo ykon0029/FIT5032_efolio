@@ -2,13 +2,15 @@
     <div id="app" class="container">
       <h1>Book Counter</h1>
       <button @click="getBookCount">Get Book Count</button>
+      <p v-if="count !== null">Total number of books: {{ count }}</p>
       <div class="form-container">
+        <h1>Add a book</h1> 
         <input v-model="isbn" placeholder="Enter ISBN" />
         <input v-model="name" placeholder="Enter Book Name" />
         <button @click="addBook">Add Book</button>
       </div>
-      <p v-if="count !== null">Total number of books: {{ count }}</p>
       <p v-if="error">{{ error }}</p>
+      <p v-if="successMessage">{{ successMessage }}</p>
     </div>
   </template>
   
@@ -22,6 +24,7 @@
         error: null,
         isbn: '', // Model for ISBN input
         name: '', // Model for Book Name input
+        successMessage: null, // Success message to display after adding a book
       };
     },
     methods: {
@@ -30,9 +33,10 @@
           const response = await axios.get('https://countbooks-as3pekg27q-uc.a.run.app');
           this.count = response.data.count;
           this.error = null;
+          this.successMessage = null; // Clear success message when fetching count
         } catch (error) {
           console.error('Error fetching book count:', error);
-          this.error = error;
+          this.error = error.message;
           this.count = null;
         }
       },
@@ -45,20 +49,21 @@
         try {
           const newBook = {
             isbn: this.isbn.trim(),
-            name: this.name.trim()
+            name: this.name.trim(),
           };
           await axios.post('https://addbook-as3pekg27q-uc.a.run.app', newBook);
-          alert('Book added successfully!');
   
+          // Display success message
+          this.successMessage = `A new book "${newBook.name}" with ISBN "${newBook.isbn}" is added.`;
+          
           // Clear the input fields after submission
           this.isbn = '';
           this.name = '';
-  
-          // Optionally, update the book count
-          this.getBookCount();
+          this.error = null; // Clear any previous error
         } catch (error) {
           console.error('Error adding book:', error);
           this.error = error.message;
+          this.successMessage = null; // Clear success message on error
         }
       },
     },
@@ -84,6 +89,7 @@
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
+    margin-bottom: 20px; /* Added margin for spacing */
   }
   
   button:hover {
@@ -91,10 +97,14 @@
   }
   
   .form-container {
-    margin: 20px 0;
+    margin: 30px 0; /* Increased margin for more space */
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  
+  h1 {
+    margin-bottom: 15px; /* Added margin below the form title */
   }
   
   input {
