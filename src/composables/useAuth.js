@@ -31,7 +31,7 @@ export function useAuth() {
         
         if (userRole === selectedRole) {
           console.log("Firebase Sign In Successful!")
-          console.log("User Role:", userRole)  // Added this line to log the role
+          console.log("User Role:", userRole) 
           localStorage.setItem('isAuthenticated', 'true')
           router.push("/")
           console.log(auth.currentUser)

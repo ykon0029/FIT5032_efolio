@@ -12,8 +12,7 @@ import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getFirestore } from "firebase/firestore"; // Add this import
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -27,6 +26,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp); // Create Firestore instance
+
+export { db }; // Export the db instance
 
 const app = createApp(App);
 app.use(PrimeVue, {

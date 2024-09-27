@@ -6,6 +6,10 @@ import AccessDeniedView from '../views/AccessDenied.vue';
 import { ref } from 'vue';
 import FirebaseSigninView from '../views/FirebaseSigninView.vue';
 import FirebaseRegisterView from '../views/FirebaseRegisterView.vue';  // Add this import
+import AddBookView from '../views/AddBookView.vue';  // Add this import
+import BookList from '../components/BookList.vue';  // Add this import
+import GetBookCountView from '@/views/GetBookCountView.vue';
+
 // Simulate a global authentication state
 export const isAuthenticated = ref(false);
 
@@ -46,6 +50,21 @@ const routes = [
     path: '/FireRegister',
     name: 'FireRegister',
     component: FirebaseRegisterView
+  },
+  {
+    path: '/addbook',
+    name: 'AddBook',
+    component: AddBookView
+  },
+  {
+    path: '/books',
+    name: 'booklist',
+    component: BookList 
+  },
+  {
+    path: '/GetBookCount',
+    name: 'GetBookCount',
+    component: GetBookCountView
   }
 ];
 
