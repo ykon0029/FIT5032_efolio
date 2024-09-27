@@ -2,7 +2,6 @@
 // import Json from './components/JSON.vue'
 // import Form from './components/Form.vue'
 import BHeader from './components/BHeader.vue';
-import BookList from './components/BookList.vue';
 
 </script>
 
@@ -18,7 +17,6 @@ import BookList from './components/BookList.vue';
       <!-- <LibraryRegistrationForm /> -->
       <!-- <JSONLab /> -->
       <router-view></router-view>
-      <!-- <BookList /> -->
     </main>
   </div>
 </template>
