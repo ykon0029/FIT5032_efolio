@@ -9,6 +9,7 @@ import FirebaseRegisterView from '../views/FirebaseRegisterView.vue';  // Add th
 import AddBookView from '../views/AddBookView.vue';  // Add this import
 import BookList from '../components/BookList.vue';  // Add this import
 import GetBookCountView from '@/views/GetBookCountView.vue';
+import WeatherView from '../views/WeatherView.vue';
 
 // Simulate a global authentication state
 export const isAuthenticated = ref(false);
@@ -65,6 +66,11 @@ const routes = [
     path: '/GetBookCount',
     name: 'GetBookCount',
     component: GetBookCountView
+  },
+  {
+    path: '/WeatherCheck',
+    name: 'WeatherCheck',
+    component: WeatherView
   }
 ];
 
