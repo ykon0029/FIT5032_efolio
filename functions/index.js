@@ -21,6 +21,50 @@ exports.countBooks = onRequest((req, res) => {
   });
 });
 
+// Function to get all books from the Firestore collection
+exports.getAllBooks = onRequest((req, res) => {
+  cors(req, res, async () => {
+    try {
+      const booksCollection = admin.firestore().collection("books");
+      const snapshot = await booksCollection.get();
+
+      // Create an array to hold the book data
+      const books = [];
+      snapshot.forEach((doc) => {
+        books.push(doc.data());// Push each book document into the array
+      });
+
+      res.status(200).send(books);// Return all books as JSON
+    } catch (error) {
+      console.error("Error retrieving books:", error.message);
+      res.status(500).send("Error retrieving books");
+    }
+  });
+});
+
+
+// Function to get all books from the Firestore collection
+exports.getAllBooks = onRequest((req, res) => {
+  cors(req, res, async () => {
+    try {
+      const booksCollection = admin.firestore().collection("books");
+      const snapshot = await booksCollection.get();
+
+      // Create an array to hold the book data
+      const books = [];
+      snapshot.forEach((doc) => {
+        books.push(doc.data()); // Push each book document into the array
+      });
+
+      res.status(200).send(books); // Return all books as JSON
+    } catch (error) {
+      console.error("Error retrieving books:", error.message);
+      res.status(500).send("Error retrieving books");
+    }
+  });
+});
+
+
 // Function to add a new book with ISBN and name fields
 exports.addBook = onRequest((req, res) => {
   cors(req, res, async () => {

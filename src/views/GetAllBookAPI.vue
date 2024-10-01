@@ -1,7 +1,7 @@
 <template>
     <div class="top-center-container">
       <!-- Display JSON data fetched from the API -->
-      <pre>{{ jsondata }}</pre>
+      <pre>{{ bookData }}</pre>
     </div>
   </template>
   
@@ -11,26 +11,26 @@
   export default {
     data() {
       return {
-        jsondata: null,  // Holds the JSON response data
+        bookData: null,  // Holds the JSON response for all books
         error: null,     // Holds any error message
       };
     },
     mounted() {
-      // Automatically fetch the data when the component is mounted
-      this.getBookCountAPI();
+      // Automatically fetch all book data when the component is mounted
+      this.getAllBooksAPI();
     },
     methods: {
-      async getBookCountAPI() {
+      async getAllBooksAPI() {
         try {
           const response = await axios.get(
-            'https://countbooks-as3pekg27q-uc.a.run.app'
+            'https://getallbooks-as3pekg27q-uc.a.run.app'  
           );
-          this.jsondata = response.data;  // Store the fetched JSON data
+          this.bookData = response.data;  // Store the fetched JSON data
           this.error = null;
         } catch (error) {
-          console.error("Error fetching book count:", error);
+          console.error("Error fetching all books:", error);
           this.error = error;  // Capture the error message
-          this.jsondata = null;
+          this.bookData = null;
         }
       },
     },
@@ -40,10 +40,9 @@
   <style scoped>
   .top-center-container {
     display: flex;
-    justify-content: center; 
+    justify-content: center;  
     align-items: flex-start;  
-    height: 100vh;           
-    padding-top: 20px;        
+    padding-top: 20px;
     text-align: center;
   }
   pre {

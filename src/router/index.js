@@ -11,6 +11,7 @@ import BookList from '../components/BookList.vue';  // Add this import
 import GetBookCountView from '@/views/GetBookCountView.vue';
 import WeatherView from '../views/WeatherView.vue';
 import CountBookAPI from '../views/CountBookAPI.vue';
+import GetAllBookAPI from '../views/GetAllBookAPI.vue';
 
 // Simulate a global authentication state
 export const isAuthenticated = ref(false);
@@ -77,6 +78,11 @@ const routes = [
     path: '/CountBookAPI',
     name: 'CountBookAPI',
     component: CountBookAPI
+  },
+  {
+    path: '/GetAllBookAPI',
+    name: 'GetAllBookAPI',
+    component: GetAllBookAPI
   }
 ];
 
