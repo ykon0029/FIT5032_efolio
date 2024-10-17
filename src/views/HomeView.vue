@@ -3,7 +3,6 @@
         <div class="row">
             <div class="col-12 col-md-8 offset-md-2">
                 <h1 class="text-center">
-                    <img src="" alt="Icon" class="icon" />
                     Home Page
                 </h1>
                 <h6 class="text-center mb-4">
